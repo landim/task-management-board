@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  app:
+  task:
     container_name: task-app
     build:
       context: .

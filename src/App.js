@@ -1,24 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import { ThemeProvider } from "@material-ui/styles";
+import {
+  CssBaseline,
+  createMuiTheme
+} from "@material-ui/core";
+import Board from './Board';
+
+const theme = createMuiTheme({
+  palette: {
+    type: "light",
+  }
+});
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: '#888',
+    height: '100%'
+  },
+  title: {
+    fontWeight: 500,
+    fontSize: '1.8em',
+    margin: '15px',
+    color: '#fff'
+  },
+}));
 
 function App() {
+  const classes = useStyles(theme);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <div className={classes.title}>{"TASK MANAGEMENT BOARD"}</div>
+          </Grid>
+          <Grid item xs={12}>
+            <Board />
+          </Grid>
+        </Grid>
+      </div>
+    </ThemeProvider>
   );
 }
 
