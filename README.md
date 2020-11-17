@@ -31,3 +31,25 @@ The above list of features were breakdown in a set of user stories (or tasks), w
 
 The ROI will be used to prioritize the work throughout this project.
 
+
+## Setup and run
+
+### Requirements
+
+- docker
+- docker compose
+
+### Development
+
+Executing for the first time:
+`docker-compose up --build`
+
+This will create the docker instance with a hot reload. So any changes on files will be reflected on the running app.
+
+Open [localhost:3001](http://localhost:3001)
+
+After first run it wont be necessary to build the instance every run:
+`docker-compose up`
+
+*if new packages/dependencies are added, it is necessary to rebuild the instance*
+
