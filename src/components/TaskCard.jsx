@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TaskCard = ({title}) => {
   const classes = useStyles();
-  const tasks = ["task1", "task2"];
 
   return (
     <Card className={classes.card}>

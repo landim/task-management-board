@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Column from './Column';
 
@@ -9,11 +8,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
   },
 }));
 
@@ -45,7 +39,7 @@ const Board = () => {
   return (
     <div className={classes.board}>
       <Grid container spacing={3}>
-      <Grid item xs={4}>
+        <Grid item xs={4}>
           <Column title="Column 1" columnId={0} tasks={tasks}/>
         </Grid>
         <Grid item xs={4}>

@@ -6,7 +6,7 @@ import {
   CssBaseline,
   createMuiTheme
 } from "@material-ui/core";
-import Board from './Board';
+import Board from './components/Board';
 
 const theme = createMuiTheme({
   palette: {
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: '#888',
-    height: '100%'
+    height: '100vw'
   },
   title: {
     fontWeight: 500,
