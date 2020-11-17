@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import TaskCard from './TaskCard';
+import Card from './Card';
 import './Column.css';
 
-const Column = ({title, columnId, tasks}) => {
-  const columnTasks = tasks.filter(task => task.columnId === columnId);
-
+const Column = ({stage}) => {
+  const { title } = stage;
   const [showNewCard, toggleNewCard] = useState(false);
 
   const cancelNewCard = () => {
@@ -14,13 +13,13 @@ const Column = ({title, columnId, tasks}) => {
   return (
     <div className="column">
       <div className="title">{title}</div>
-      {columnTasks.map(task => (
-        <TaskCard title={task.title} />
+      {stage.tasks.map(task => (
+        <Card task={task} />
       ))}
       {showNewCard && (
-        <TaskCard columnId={columnId} cancelNewCardCallback={cancelNewCard} />
+        <Card stage={stage} closeNewCardCallback={cancelNewCard} />
       )}
-      <div className={classes.addCard} onClick={() => toggleNewCard(true)}>+ Add another card</div>
+      <div className="add-another-card" onClick={() => toggleNewCard(true)}>+ Add another card</div>
     </div>
   );
 }
