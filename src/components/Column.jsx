@@ -1,22 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TaskCard from './TaskCard';
 import './Column.css';
 
-// const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     padding: theme.spacing(1),
-//     textAlign: 'center',
-//     background: '#bbb',
-//   },
-//   title: {
-//     fontSize: '1.5em',
-//     fontWeight: 400,
-//     padding: theme.spacing(1)
-//   }
-// }));
-
 const Column = ({title, columnId, tasks}) => {
   const columnTasks = tasks.filter(task => task.columnId === columnId);
+
+  const [showNewCard, toggleNewCard] = useState(false);
+
+  const cancelNewCard = () => {
+    toggleNewCard(false);
+  }
 
   return (
     <div className="column">
@@ -24,6 +17,10 @@ const Column = ({title, columnId, tasks}) => {
       {columnTasks.map(task => (
         <TaskCard title={task.title} />
       ))}
+      {showNewCard && (
+        <TaskCard columnId={columnId} cancelNewCardCallback={cancelNewCard} />
+      )}
+      <div className={classes.addCard} onClick={() => toggleNewCard(true)}>+ Add another card</div>
     </div>
   );
 }
