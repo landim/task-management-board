@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
   },
+  unusedClass: {}
 }));
 
 const Board = () => {
