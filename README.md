@@ -41,10 +41,6 @@ The ROI will be used to prioritize the work throughout this project.
 
 ### Development
 
-Setup git to look for hook files:
-`git config core.hooksPath .githooks`
-Now all commit will run eslinter before commit.
-
 Executing for the first time:
 `docker-compose up --build`
 
