@@ -1,18 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
+import './Board.css';
 import Column from './Column';
 
-const useStyles = makeStyles((theme) => ({
-  board: {
-    flexGrow: 1,
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-  },
-}));
-
 const Board = () => {
-  const classes = useStyles();
   const tasks = [
     {
       title:"Task 1",
@@ -37,18 +27,10 @@ const Board = () => {
   ]
 
   return (
-    <div className={classes.board}>
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <Column title="Column 1" columnId={0} tasks={tasks}/>
-        </Grid>
-        <Grid item xs={4}>
-          <Column title="Column 2" columnId={1} tasks={tasks}/>
-        </Grid>
-        <Grid item xs={4}>
-          <Column title="Column 3" columnId={2} tasks={tasks}/>
-        </Grid>
-      </Grid>
+    <div className="board">
+      <Column title="Column 1" columnId={0} tasks={tasks}/>
+      <Column title="Column 2" columnId={1} tasks={tasks}/>
+      <Column title="Column 3" columnId={2} tasks={tasks}/>
     </div>
   );
 }
