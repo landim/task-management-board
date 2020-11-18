@@ -21,6 +21,7 @@ function addTask(task) {
   }
   // add to current stage
   this.tasks.push(task);
+  task.stage = this;
 }
 
 function removeTask(task) {
@@ -29,15 +30,17 @@ function removeTask(task) {
 
 /* Factory method to create Column objects */
 const createStage = ({title, tasks = []}) => {
-  return {
+  const stage =  {
     id: uuidv4(),
     title,
     tasks,
     addTask,
     removeTask,
-  }
-}
- ;
+  };
+  stage.addTask.bind(stage);
+  stage.removeTask.bind(stage);
+  return stage;
+};
 
 
 export { createStage, createTask };
