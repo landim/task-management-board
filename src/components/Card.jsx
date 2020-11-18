@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { useDrag } from 'react-dnd';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { TasksContext } from '../TasksContext';
 import { createTask } from '../model/Task';
+import { ReactComponent as EditIcon } from '../assets/icons/edit-icon.svg';
 import './Card.css';
 
 import { CARD_TYPE } from './ItemTypes';
@@ -91,7 +91,7 @@ const Card = ({task, stage, closeNewCardCallback}) => {
           ref={draggableCardRef}
         >
           <div className="card edit-icon">
-            {onHover && <EditOutlinedIcon fontSize="inherit"/>}
+            {onHover && <EditIcon style={{height: '12px', width: '12px'}}/>}
           </div>
           <div className="title">{taskTitle}</div>
         </div>
