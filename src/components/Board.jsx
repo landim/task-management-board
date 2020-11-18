@@ -1,36 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TasksContext } from '../TasksContext';
 import './Board.css';
 import Column from './Column';
 
 const Board = () => {
-  const tasks = [
-    {
-      title:"Task 1",
-      columnId: 1
-    },
-    {
-      title:"Task 2",
-      columnId: 0
-    },
-    {
-      title:"Task 3",
-      columnId: 1
-    },
-    {
-      title:"Task 4",
-      columnId: 1
-    },
-    {
-      title:"Task 5",
-      columnId: 2
-    },
-  ]
+  const [state, setState] = useContext(TasksContext);
 
   return (
     <div className="board">
-      <Column title="Column 1" columnId={0} tasks={tasks}/>
-      <Column title="Column 2" columnId={1} tasks={tasks}/>
-      <Column title="Column 3" columnId={2} tasks={tasks}/>
+      {state.stages.map(stage => (
+        <Column stage={stage} />
+      ))}
     </div>
   );
 }
