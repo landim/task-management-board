@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import { TasksContext } from '../TasksContext';
 
@@ -11,12 +11,17 @@ const Column = ({stage}) => {
   const { title } = stage;
   const [showNewCard, toggleNewCard] = useState(false);
   const [state, setState] = useContext(TasksContext);
+  const [columnTitle, setColumnTitle] = useState(stage.title);
+  const [editing, setEditing] = useState(false);
+  const editInput = useRef(null);
+
+  const updateContext = () => setState({stages: state.stages});
   // Make column droppable
   const [, drop] = useDrop({
     accept: CARD_TYPE,
     drop(item) {
       stage.addTask(item.task);
-      setState({stages: state.stages});
+      updateContext();
     },
     canDrop() {
       return !stage.tasks.length;
@@ -29,10 +34,40 @@ const Column = ({stage}) => {
     toggleNewCard(false);
   }
 
+  const handleTextChange = (event) => {
+    setColumnTitle(event.target.value);
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      stage.title = columnTitle;
+      setEditing(false);
+      updateContext();
+    }
+  }
+  useEffect(() => {
+    // if editing, set focus on textarea when component loads
+    if (editing) {
+      editInput.current.focus();
+    }
+  });
+
   stage.tasks.sort((taskA, taskB) => taskA.position < taskB.position);
   return (
     <div className="column" ref={ columnRef }>
-      <div className="title">{title}</div>
+      {editing ? (
+        <input
+          ref={editInput}
+          className="title"
+          name={`${stage.id}-change`}
+          onChange={handleTextChange}
+          onKeyDown={handleKeyDown}
+          value={columnTitle}></input>
+      ) : (
+        <div
+          className="title"
+          onClick={() => setEditing(true)}>{title}</div>
+      )}
       {stage.tasks.map(task => (
         <Card task={task} key={task.id}/>
       ))}
