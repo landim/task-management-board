@@ -32,6 +32,17 @@ The above list of features were breakdown in a set of user stories (or tasks), w
 The ROI will be used to prioritize the work throughout this project.
 
 
+### Assumptions
+
+- The app starts with a fixed set of cards;
+- To edit column name, just click on it and hit Enter or Esc when done;
+
+### Room for improvements
+
+1. Refactor Cards and Columns components to share same title editing feature;
+1. Add tests to ensure that drag and drop of cards will not loose or duplicate them;
+1. Create an entity to represent Board and make it possible to have multiple Boards;
+
 ## Setup and run
 
 ### Requirements
