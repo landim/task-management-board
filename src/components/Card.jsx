@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { TasksContext } from '../TasksContext';
 import { createTask } from '../model/Task';
 import './Card.css';
 
-const TaskCard = ({task, stage, closeNewCardCallback}) => {
+const Card = ({task, stage, closeNewCardCallback}) => {
   const [editing, setEditing] = useState(!task);
   const [taskTitle, setTaskTitle] = useState(task && task.title);
+  const [onHover, setOnHover] = useState(false);
   const editInput = useRef(null);
 
   const [state, setState] = useContext(TasksContext);
@@ -18,11 +20,24 @@ const TaskCard = ({task, stage, closeNewCardCallback}) => {
   }
 
   const saveTask = () => {
-    createTask({ title: taskTitle, stage });
+    if (task) {
+      task.title = taskTitle;
+    } else {
+      createTask({ title: taskTitle, stage });
+    }
     //TODO add task to main list
     setState({stages: state.stages});
     exitCardEditing();
   }
+
+  const deleteTask = () => {
+    task.stage.removeTask(task);
+    setState({stages: state.stages});
+    exitCardEditing();
+  }
+
+  const onMouseEnter = () => setOnHover(true);
+  const onMouseLeave = () => setOnHover(false);
 
   useEffect(() => {
     // if editing, set focus on textarea when component loads
@@ -48,14 +63,25 @@ const TaskCard = ({task, stage, closeNewCardCallback}) => {
             <div className="actions">
               <div className="button" onClick={saveTask}>Save</div>
               <div className="button cancel" onClick={exitCardEditing}>Cancel</div>
+              {task && <div className="button delete" onClick={deleteTask}>Delete</div>}
             </div>
           </div>
         </div>
       ) : (
-        <div className="title">{taskTitle}</div>
+        <div
+          className="card-display"
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={() => setEditing(true)}
+        >
+          <div className="card edit-icon">
+            {onHover && <EditOutlinedIcon fontSize="inherit"/>}
+          </div>
+          <div className="title">{taskTitle}</div>
+        </div>
       )}
     </div>
   );
 }
 
-export default TaskCard;
+export default Card;

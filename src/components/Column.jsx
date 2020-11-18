@@ -14,7 +14,7 @@ const Column = ({stage}) => {
     <div className="column">
       <div className="title">{title}</div>
       {stage.tasks.map(task => (
-        <Card task={task} />
+        <Card task={task} key={task.id}/>
       ))}
       {showNewCard && (
         <Card stage={stage} closeNewCardCallback={cancelNewCard} />
