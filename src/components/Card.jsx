@@ -1,14 +1,29 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
+import { useDrag } from 'react-dnd';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import { TasksContext } from '../TasksContext';
 import { createTask } from '../model/Task';
 import './Card.css';
+
+import { CARD_TYPE } from './ItemTypes';
 
 const Card = ({task, stage, closeNewCardCallback}) => {
   const [editing, setEditing] = useState(!task);
   const [taskTitle, setTaskTitle] = useState(task && task.title);
   const [onHover, setOnHover] = useState(false);
   const editInput = useRef(null);
+  const draggableCardRef = useRef(null);
+  const [{ isDragging }, drag] = useDrag({
+    item: {
+      type: CARD_TYPE,
+      id: task.id,
+      task,
+    },
+    collect: monitor => ({
+      isDragging: monitor.isDragging()
+    })
+  });
+  drag(draggableCardRef);
 
   const [state, setState] = useContext(TasksContext);
 
@@ -69,10 +84,11 @@ const Card = ({task, stage, closeNewCardCallback}) => {
         </div>
       ) : (
         <div
-          className="card-display"
+          className={`card-display ${isDragging ? 'dragging' : ''}`}
           onMouseEnter={onMouseEnter}
           onMouseLeave={onMouseLeave}
           onClick={() => setEditing(true)}
+          ref={draggableCardRef}
         >
           <div className="card edit-icon">
             {onHover && <EditOutlinedIcon fontSize="inherit"/>}
