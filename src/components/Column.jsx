@@ -44,6 +44,9 @@ const Column = ({stage}) => {
       setEditing(false);
       updateContext();
     }
+    if (event.key === 'Escape') {
+      setEditing(false);
+    }
   }
   useEffect(() => {
     // if editing, set focus on textarea when component loads
