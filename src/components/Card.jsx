@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 import { TasksContext } from '../TasksContext';
 import { createTask } from '../model/Task';
 import { ReactComponent as EditIcon } from '../assets/icons/edit-icon.svg';
@@ -13,17 +13,59 @@ const Card = ({task, stage, closeNewCardCallback}) => {
   const [onHover, setOnHover] = useState(false);
   const editInput = useRef(null);
   const draggableCardRef = useRef(null);
+
+  const [, drop] = useDrop({
+    accept: CARD_TYPE,
+    hover(item, monitor) {
+      if (!draggableCardRef.current) {
+          return;
+      }
+      const dragIndex = item.task.position;
+      const hoverIndex = task.position;
+
+      const dragStage = item.task.stage;
+      const hoverStage = task.stage;
+      // Don't replace items with themselves
+      if (dragIndex === hoverIndex && dragStage.id === hoverStage.id) {
+          return;
+      }
+      // Determine rectangle on screen
+      const hoverBoundingRect = draggableCardRef.current?.getBoundingClientRect();
+      // Get vertical middle
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+      // Get pixels to the top
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      // Only perform the move when the mouse has crossed half of the items height
+      // When dragging downwards, only move when the cursor is below 50%
+      // When dragging upwards, only move when the cursor is above 50%
+      // Dragging downwards
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+      }
+      // Dragging upwards
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+      }
+      // Time to actually perform the action
+      item.task.setNewPosition(hoverIndex, hoverStage);
+      setState({stages: state.stages});
+    },
+  });
+
+
   const [{ isDragging }, drag] = useDrag({
     item: {
       type: CARD_TYPE,
-      id: task.id,
+      id: task ? task.id : '-',
       task,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging()
-    })
+    }),
   });
-  drag(draggableCardRef);
+  drag(drop(draggableCardRef));
 
   const [state, setState] = useContext(TasksContext);
 
@@ -40,7 +82,7 @@ const Card = ({task, stage, closeNewCardCallback}) => {
     } else {
       createTask({ title: taskTitle, stage });
     }
-    //TODO add task to main list
+    //add task to main list
     setState({stages: state.stages});
     exitCardEditing();
   }
