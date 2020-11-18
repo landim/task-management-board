@@ -17,6 +17,9 @@ const Column = ({stage}) => {
     drop(item) {
       stage.addTask(item.task);
       setState({stages: state.stages});
+    },
+    canDrop() {
+      return !stage.tasks.length;
     }
   });
   const columnRef = useRef(null);
@@ -26,6 +29,7 @@ const Column = ({stage}) => {
     toggleNewCard(false);
   }
 
+  stage.tasks.sort((taskA, taskB) => taskA.position < taskB.position);
   return (
     <div className="column" ref={ columnRef }>
       <div className="title">{title}</div>
