@@ -1,8 +1,8 @@
 import { createStage, createTask } from './model/Task';
 
 const stage1 = createStage({title: "Column 1"});
-const stage2 = createStage({title: "Column 1"});
-const stage3 = createStage({title: "Column 1"});
+const stage2 = createStage({title: "Column 2"});
+const stage3 = createStage({title: "Column 3"});
 
 createTask({ title: "Task 1", stage: stage1 });
 createTask({ title: "Task 2", stage: stage1 });

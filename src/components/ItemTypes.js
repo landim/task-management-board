@@ -1,0 +1,4 @@
+const CARD_TYPE = "CARD";
+const COLUMN_TYPE = "COLUMN";
+
+export { CARD_TYPE, COLUMN_TYPE };
