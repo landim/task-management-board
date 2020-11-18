@@ -32,6 +32,28 @@ The above list of features were breakdown in a set of user stories (or tasks), w
 The ROI will be used to prioritize the work throughout this project.
 
 
+### Assumptions
+
+- The app starts with a fixed set of cards;
+- To edit column name, just click on it and hit Enter or Esc when done;
+
+### Room for improvements
+
+1. Refactor Cards and Columns components to share same title editing feature;
+1. Add tests to ensure that drag and drop of cards will not loose or duplicate them;
+1. Create an entity to represent Board and make it possible to have multiple Boards;
+1. Refactor css styles to use `scss` or `styled-components`;
+
+
+## Final thoughts
+
+It was a interesting exercise, specially because I am a strong Trello and Jira user. First time working with drag and drop feature, so it was fun in that regard as well.
+
+1. I started by listing the backlog and setting story points, priorities and describing user stories user Gerhkin-ish language. (time to complete 1 hour)
+1. Created base ui using Material-UI, but after struggle a bit with Modal component I decided to remove it and use pure css due its simplicity. (2 hours)
+1. The rest of tickets went more faster after got in to the zone. (about 5 hours)
+
+
 ## Setup and run
 
 ### Requirements
