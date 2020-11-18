@@ -4,12 +4,12 @@ import './Board.css';
 import Column from './Column';
 
 const Board = () => {
-  const [state, setState] = useContext(TasksContext);
+  const [state] = useContext(TasksContext);
 
   return (
     <div className="board">
       {state.stages.map(stage => (
-        <Column stage={stage} />
+        <Column stage={stage} key={stage.id} />
       ))}
     </div>
   );
